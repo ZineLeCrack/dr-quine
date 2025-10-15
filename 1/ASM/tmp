@@ -1,0 +1,36 @@
+section .text
+global ft_strlen
+global main
+
+; --- ft_strlen() ---
+
+ft_strlen:
+	xor rax, rax
+	.loop:
+		cmp byte [rdi], 0
+		je .end
+		inc rdi
+		inc rax
+		jmp .loop
+	.end:
+		ret
+
+; --- main() ---
+
+main:
+	mov rdi, str
+	call ft_strlen
+	mov rdi, 1
+	mov rsi, str
+	mov edx, eax
+	mov rax, 1
+	syscall
+	xor rax, rax
+	ret
+
+; --- data ---
+
+section .data
+str: db
+
+section .note.GNU-stack noalloc noexec nowrite align=1

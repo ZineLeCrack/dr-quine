@@ -1,63 +1,36 @@
 section .text
+global ft_strlen
 global main
+
+; --- ft_strlen() ---
+
+ft_strlen:
+	xor rax, rax
+	.loop:
+		cmp byte [rdi], 0
+		je .end
+		inc rdi
+		inc rax
+		jmp .loop
+	.end:
+		ret
 
 ; --- main() ---
 
 main:
-	; --- openat("Colleen.s", O_RDONLY) ---
-	mov rax, 257
-	mov rdi, -100
-	lea rsi, [rel file]
-	xor rdx, rdx
-	xor r10, r10
+	mov rdi, str
+	call ft_strlen
+	mov rdi, 1
+	mov rsi, str
+	mov edx, eax
+	mov rax, 1
 	syscall
+	xor rax, rax
+	ret
 
-	cmp rax, 0
-	jl .err
-	mov r12, rax
-
-	.loop:
-		; --- read(fd, buf, 1024) ---
-		mov rax, 0
-		mov rdi, r12
-		lea rsi, [rel buf]
-		mov rdx, 1024
-		syscall
-
-		cmp rax, 0
-		jle .end
-		mov rbx, rax
-
-		; --- write(1, buf, rbx) ---
-		mov rax, 1
-		mov rdi, 1
-		lea rsi, [rel buf]
-		mov rdx, rbx
-		syscall
-
-		jmp .loop
-
-	.end:
-		; --- close(fd) ---
-		mov rax, 3
-		mov rdi, r12
-		syscall
-
-		xor rax, rax
-		ret
-
-	.err:
-		mov eax, 1
-		ret
-
-; --- file = "Colleen.s" ---
+; --- data ---
 
 section .data
-file: db "Colleen.s", 0
-
-; --- buf (size = 1024 Bytes) ---
-
-section .bss
-buf: resb 1024
+str: db "section .text", 10, "global ft_strlen", 10, "global main", 10, "", 10, "; --- ft_strlen() ---", 10, "", 10, "ft_strlen:", 10, "	xor rax, rax", 10, "	.loop:", 10, "		cmp byte [rdi], 0", 10, "		je .end", 10, "		inc rdi", 10, "		inc rax", 10, "		jmp .loop", 10, "	.end:", 10, "		ret", 10, "", 10, "; --- main() ---", 10, "", 10, "main:", 10, "	mov rdi, str", 10, "	call ft_strlen", 10, "	mov rdi, 1", 10, "	mov rsi, str", 10, "	mov edx, eax", 10, "	mov rax, 1", 10, "	syscall", 10, "	xor rax, rax", 10, "	ret", 10, "", 10, "; --- data ---", 10, "", 10, "section .data", 10, "str: db", 10, "", 10, "section .note.GNU-stack noalloc noexec nowrite align=1", 10, 0
 
 section .note.GNU-stack noalloc noexec nowrite align=1
