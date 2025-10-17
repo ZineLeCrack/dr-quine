@@ -1,21 +1,23 @@
 NAME = Sully
 
-CC = cc
+NASM = nasm
+NASMFLAGS = -f elf64
+
+CC = gcc -no-pie
 CFLAGS = -Wall -Wextra -Werror -g3
 
 OBJDIR = objs
 
-SRCS = Sully.c
-
-OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
+SRCS = Sully.s
+OBJS = $(SRCS:%.s=$(OBJDIR)/%.o)
 
 all: $(NAME)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
 
-$(OBJDIR)/%.o: %.c | $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJDIR)/%.o: %.s | $(OBJDIR)
+	$(NASM) $(NASMFLAGS) $< -o $@
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
@@ -23,7 +25,7 @@ $(NAME): $(OBJS)
 
 clean:
 	$(RM) -r $(OBJDIR)
-	$(RM) Sully_4.c Sully_3.c Sully_2.c Sully_1.c Sully_0.c
+	$(RM) Sully_4.s Sully_3.s Sully_2.s Sully_1.s Sully_0.s
 	@echo "\033[33m✔ $(OBJDIR) suppressed\033[0m"
 
 fclean: clean
