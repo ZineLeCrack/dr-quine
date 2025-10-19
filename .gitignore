@@ -1,2 +1,5 @@
 .vscode/
+*.o
+*_kid.*
+Sully_*
 https://github.com/mharriso/school21-checklists/blob/master/ng_unix_dr-quine.pdf

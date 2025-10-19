@@ -23,11 +23,11 @@ $(NAME_COLLEEN): $(COLLEEN_OBJ)
 	@echo "\033[32m✔ $@ compilation completed\033[0m"
 
 $(NAME_GRACE): $(GRACE_OBJ)
-	$(CC) $(CFLAGS) $(GRACE_OBJ) -o $@
+	$(CC) $(CFLAGS) -no-pie $(GRACE_OBJ) -o $@
 	@echo "\033[32m✔ $@ compilation completed\033[0m"
 
 $(NAME_SULLY): $(SULLY_OBJ)
-	$(CC) $(CFLAGS) $(SULLY_OBJ) -o $@
+	$(CC) $(CFLAGS) -no-pie $(SULLY_OBJ) -o $@
 	@echo "\033[32m✔ $@ compilation completed\033[0m"
 
 %.o: %.s
