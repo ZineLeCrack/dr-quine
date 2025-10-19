@@ -23,7 +23,7 @@ $(NAME): $(OBJS)
 
 clean:
 	$(RM) -r $(OBJDIR)
-	$(RM) Sully_4.c Sully_3.c Sully_2.c Sully_1.c Sully_0.c
+	$(RM) Sully_*.c Sully_*.o
 	@echo "\033[33m✔ $(OBJDIR) suppressed\033[0m"
 
 fclean: clean
